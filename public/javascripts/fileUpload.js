@@ -25,8 +25,8 @@ function ready() {
     
     FilePond.setOptions({
         stylePanelAspectRatio: 1 / coverAspectRatio,
-        imageResizeTargetWidth: 150,
-        imageResizeTargetHeight: 100,
+        imageResizeTargetWidth: coverWidth,
+        imageResizeTargetHeight: coverHeight,
     })
     
     FilePond.parse(document.body);
