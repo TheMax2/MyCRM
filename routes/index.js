@@ -33,8 +33,13 @@ router.get('/', checkAuthenticated, (req, res) => {
 })
 
 router.get('/login', checkNotAuthenticated, async (req, res) => {
-    users = await User.find();
-    res.render('login.ejs')
+    try {
+        users = await User.find();
+        res.render('login.ejs')
+    } catch {
+        res.render('login.ejs')
+    }
+    
 })
 router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
