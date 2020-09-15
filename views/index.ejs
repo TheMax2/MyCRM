@@ -1,2 +1,5 @@
-<h2 class="page-header">Recently Added</h2>
-<%- include('partials/bookGrid', {books: books, large: true}) %>
+<h2 class="page-header">HI <%= name %></h2>
+
+<form action="/logout?_method=DELETE" method="POST">
+    <button class="btn btn-primary" type="submit">Log Out</button>
+</form>
