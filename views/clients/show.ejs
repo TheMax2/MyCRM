@@ -1,0 +1,10 @@
+<h2 class="page-header"><%= myClient.name %></h2>
+<div class="btn-row">
+    <a class="btn btn-primary" href="/clients/<%= myClient.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm',
+        {url: `/clients/${myClient.id}` }) %>
+</div>
+<% if (appointmentsByClient.length > 0){ %>
+    <h2 class="page-header">Appointments By Client</h2>
+    <%- include('../partials/appointmentGrid', {appointments: appointmentsByClient}) %>
+<% } %>

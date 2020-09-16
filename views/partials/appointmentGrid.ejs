@@ -1,0 +1,11 @@
+<% appointmentCoverClass = locals.large ? 'appointment-cover-large' : ''%>
+<% appointmentGridClass = locals.large ? 'appointment-grid-large' : '' %>
+
+<div class="appointment-grid <%= appointmentCoverClass %>">
+    <% appointments.forEach(appointment => { %>
+        <a href="/appointments/<%= appointment.id %>">
+            <img class="appointment-cover <%= appointmentCoverClass %>" src=
+            "<%= appointment.coverImagePath %>">
+        </a>
+    <% }) %>
+</div>

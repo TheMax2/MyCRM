@@ -1,0 +1,40 @@
+<div class="form-row">
+    <div class="form-item">
+        <label>Title</label>
+        <input type="text" name="title" value="<%= appointment.title %>">
+    </div>
+    <div class="form-item">
+        <label>Client</label>
+        <select name="client">
+        <% clients.forEach(client => { %>
+            <% if (client.id === appointment.client){ %>
+                <option selected label="<%= client.name %>" value="<%= client.id%>">
+            <% } else { %>
+                <option label="<%= client.name %>" value="<%= client.id %>">
+            <% } %>    
+        <% }) %>
+        </select>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-item">
+        <label>Publish Date</label>
+        <input type="date" name="publishDate" 
+            value="<%= appointment.publishDate == null ? '' : 
+            appointment.publishDate.toISOString().split('T')[0] %>">
+    </div>
+    <div class="form-item">
+        <label>Page Count</label>
+        <input type="number" name="pageCount" min="1" value="<%= appointment.pageCount %>">
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-item form-item-no-grow">
+        <label>Cover</label>
+        <input type="file" name="cover" class="appointment-cover filepond">
+    </div>
+    <div class="form-item">
+        <label>Description</label>
+        <textarea name="description"><%= appointment.description %></textarea>
+    </div>
+</div>

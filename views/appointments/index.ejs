@@ -1,5 +1,5 @@
-<h2 class="page-header">Search Books</h2>
-<form action="/books" method="GET">
+<h2 class="page-header">Search Appointments</h2>
+<form action="/appointments" method="GET">
     <div class="form-row">
         <div class="form-item">
             <label>Title</label>
@@ -23,4 +23,4 @@
     </div>
 </form>
 <br>
-<%- include('../partials/bookGrid', {books: books, large: true}) %>
+<%- include('../partials/appointmentGrid', {appointments: appointments, large: true}) %>
