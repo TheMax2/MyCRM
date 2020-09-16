@@ -1,4 +1,4 @@
-<h2 class="page-header"><%= myClient.name %></h2>
+<h2 class="page-header"><%= myClient.firstName %> <%= myClient.lastName %></h2>
 <div class="btn-row">
     <a class="btn btn-primary" href="/clients/<%= myClient.id %>/edit">Edit</a>
     <%- include('../partials/deleteForm',

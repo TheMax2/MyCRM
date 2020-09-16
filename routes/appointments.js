@@ -11,12 +11,6 @@ router.get('/', async (req, res) => {
     if (req.query.title != null && req.query.title != '') { // redundant?
         query = query.regex('title', new RegExp(req.query.title, 'i'));
     }
-    if (req.query.publishedBefore != null && req.query.publishedBefore != '') { // redundant?
-        query = query.lte('publishDate', req.query.publishedBefore);
-    }
-    if (req.query.publishedAfter != null && req.query.publishedAfter != '') { // redundant?
-        query = query.gte('publishDate', req.query.publishedAfter);
-    }
     try {
         const appointments = await query.exec();
         res.render('appointments/index', {
@@ -36,10 +30,9 @@ router.get('/new', async (req, res) => {
 // Create Appointment Route
 router.post('/', async (req, res) => {
     const appointment = new Appointment({
-        title: req.body.title,
         client: req.body.client,
-        publishDate: new Date(req.body.publishDate),
-        pageCount: req.body.pageCount,
+        appointDate: new Date(req.body.appointDate),
+        appointTime: req.body.appointTime,
         description: req.body.description
     })
     //saveCover(appointment, req.body.cover);
@@ -84,14 +77,10 @@ router.put('/:id', async (req, res) => {
     let appointment;
     try{
         appointment = await Appointment.findById(req.params.id);
-        appointment.title = req.body.title;
         appointment.client = req.body.client;
-        appointment.publishDate = new Date(req.body.publishDate);
-        appointment.pageCount = req.body.pageCount;
+        appointment.appointDate = new Date(req.body.appointDate);
+        appointment.appointTime = req.body.appointTime;
         appointment.description = req.body.description;
-        if (req.body.cover != null && req.body.cover !== '') {
-            saveCover(appointment, req.body.cover);
-        }
         await appointment.save();
         res.redirect(`/appointments/${appointment.id}`);
     } catch {
@@ -151,13 +140,5 @@ async function renderFormPage(res, appointment, form, hasError = false){
     }
 }
 
-function saveCover(appointment, coverEncoded){
-    if(coverEncoded == null) return;
-    const cover = JSON.parse(coverEncoded);
-    if(cover != null && imageMimeTypes.includes(cover.type)){
-        appointment.coverImage = new Buffer.from(cover.data, 'base64');
-        appointment.coverImageType = cover.type;
-    }
-}
 
 module.exports = router;

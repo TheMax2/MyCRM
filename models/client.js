@@ -2,10 +2,21 @@ const mongoose = require('mongoose');
 const Appointment = require('./appointment');
 
 const clientSchema = new mongoose.Schema({
-    name: {
+    firstName: {
         type: String,
         required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String
+    },
+    phone: {
+        type: String
     }
+
 })
 
 clientSchema.pre('remove', function(next) {

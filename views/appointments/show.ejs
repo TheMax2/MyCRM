@@ -1,7 +1,6 @@
 <h2 class="page-header"><%= appointment.title %></h2>
 <div class="appointment-details">
     <div>
-        <img class="appointment-cover" src="<%= appointment.coverImagePath %>" >
         <div class="appointment-details-btn-grid">
             <a class="btn btn-primary" href="/appointments/<%= appointment.id %>/edit">Edit</a>
             <%- include('../partials/deleteForm', 
@@ -12,11 +11,9 @@
     </div>
     <div class="appointment-details-grid">
         <div class="appointment-details-label">Client:</div>
-        <div><%= appointment.client.name %></div>
-        <div class="appointment-details-label">Publish Date:</div>
-        <div><%= appointment.publishDate.toDateString() %></div>
-        <div class="appointment-details-label">Page Count:</div>
-        <div><%= appointment.pageCount %></div>
+        <div><%= appointment.client.firstName %> <%= appointment.client.lastName %></div>
+        <div class="appointment-details-label">Date:</div>
+        <div><%= appointment.appointDate.toDateString() %></div>
         <div class="appointment-details-label">Description:</div>
         <div><%= appointment.description %></div>
     </div>

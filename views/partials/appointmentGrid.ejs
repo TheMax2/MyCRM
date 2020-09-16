@@ -1,11 +1,15 @@
 <% appointmentCoverClass = locals.large ? 'appointment-cover-large' : ''%>
 <% appointmentGridClass = locals.large ? 'appointment-grid-large' : '' %>
 
-<div class="appointment-grid <%= appointmentCoverClass %>">
+<div class="appointment-grid">
     <% appointments.forEach(appointment => { %>
-        <a href="/appointments/<%= appointment.id %>">
-            <img class="appointment-cover <%= appointmentCoverClass %>" src=
-            "<%= appointment.coverImagePath %>">
-        </a>
+        <div>
+            <div> appointment with <%= appointment.client.firstName %> </div>
+            <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">View</a>
+            <br>
+            <%- include('../partials/deleteForm', 
+                { url: `/appointments/${appointment.id}` }) %>
+        </div>
+        
     <% }) %>
 </div>

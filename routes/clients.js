@@ -6,8 +6,8 @@ const Appointment = require('../models/appointment')
 // All Clients Route
 router.get('/', async (req, res) => {
     let searchOptions = {}
-    if (req.query.name != null && req.query.name !== '') {
-        searchOptions.name = new RegExp(req.query.name, 'i')
+    if (req.query.firstName != null && req.query.firstName !== '') {
+        searchOptions.firstName = new RegExp(req.query.firstName, 'i')
     }
     try{
         const clients = await Client.find(searchOptions);
@@ -28,7 +28,10 @@ router.get('/new', (req, res) => {
 // Create Client Route
 router.post('/', async (req, res) => {
     const client = new Client({
-        name:req.body.name
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        email:req.body.email,
+        phone:req.body.phone
     })
     try{
         const newClient = await client.save();
@@ -71,7 +74,10 @@ router.put('/:id', async (req, res) => {
     let client;
     try{
         client = await Client.findById(req.params.id);
-        client.name = req.body.name
+        client.firstName = req.body.firstName
+        client.lastName = req.body.lastName
+        client.email = req.body.email
+        client.phone = req.body.phone
         await client.save();
         res.redirect(`/clients/${client.id}`);
     } catch {

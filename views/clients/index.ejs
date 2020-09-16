@@ -3,7 +3,7 @@
     <div class="form-row">
         <div class="form-item">
             <label>Name</label>
-            <input type="text" name="name" value="<%= searchOptions.name%>">
+            <input type="text" name="firstName" value="<%= searchOptions.firstName%>">
         </div>
     </div>
     <div class="form-row form-row-end">
@@ -13,7 +13,7 @@
 <br>
 <% clients.forEach(client => { %>
     <div class="client-row">
-        <div class="client-name"> <%= client.name %></div>
+        <div class="client-name"> <%= client.firstName %> <%= client.lastName %></div>
         <div class="btn-row">
             <a class="btn btn-primary" href="/clients/<%= client.id %>">View</a>
             <a class="btn btn-primary" href="/clients/<%= client.id %>/edit">Edit</a>
