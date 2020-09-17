@@ -1,4 +1,13 @@
 <h2 class="page-header">Appointments</h2>
 
 <br>
-<%- include('../partials/appointmentGrid', {appointments: appointments, large: true}) %>
+<% appointments.forEach(appointment => { %>
+    <div>
+        <div><%= appointment.client.firstName %> <%= appointment.client.lastName %></div>
+        <br>
+        <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">View</a>
+        <br>
+        <br>
+    </div>
+    
+<% }) %>

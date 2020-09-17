@@ -1,10 +1,22 @@
 <h2 class="page-header"><%= myClient.firstName %> <%= myClient.lastName %></h2>
+<h3 style="margin: 0; padding: 0;">email: <%= myClient.email %></h3>  <h3 style="margin: 0; padding: 0;">phone: <%= myClient.phone %></h3>
+
+<% if (appointmentsByClient.length > 0){ %>
+    <h2 class="page-header">Upcoming Appointments</h2>
+    <% appointmentsByClient.forEach(appointment => { %>
+        <div>
+            <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">
+                <%= appointment.appointDate.toDateString() %> <%= appointment.appointTime %> <%= appointment.description %></a>
+            <br><br>
+        </div>
+        
+    <% }) %>
+<% } %>
+
+<br>
+
 <div class="btn-row">
-    <a class="btn btn-primary" href="/clients/<%= myClient.id %>/edit">Edit</a>
+    <a class="btn btn-primary" href="/clients/<%= myClient.id %>/edit">Edit Client</a>
     <%- include('../partials/deleteForm',
         {url: `/clients/${myClient.id}` }) %>
 </div>
-<% if (appointmentsByClient.length > 0){ %>
-    <h2 class="page-header">Appointments By Client</h2>
-    <%- include('../partials/appointmentGrid', {appointments: appointmentsByClient}) %>
-<% } %>

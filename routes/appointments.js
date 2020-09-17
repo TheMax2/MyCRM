@@ -12,12 +12,17 @@ router.get('/', async (req, res) => {
         query = query.regex('title', new RegExp(req.query.title, 'i'));
     }
     try {
-        const appointments = await query.exec();
+        const appointments = await query.populate('client').exec();
+        // await appointments.forEach(appointment => {
+        //     appointment.populate('client').exec();
+        // });
+        
         res.render('appointments/index', {
             appointments: appointments,
             searchOptions: req.query
         });
-    } catch {
+    } catch (e) {
+        console.log(e);
         res.redirect('/')
     }
 })
@@ -32,7 +37,7 @@ router.post('/', async (req, res) => {
     const appointment = new Appointment({
         client: req.body.client,
         appointDate: new Date(req.body.appointDate),
-        appointTime: req.body.appointTime,
+        appointTime: req.body.appointTime.toString(),
         description: req.body.description
     })
     //saveCover(appointment, req.body.cover);
