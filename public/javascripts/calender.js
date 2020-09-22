@@ -31,13 +31,9 @@ function createCalender() {
 // creates and returns a div to represent a day square on the calender
 function dayContainer() {
     var div = document.createElement("div");
-    div.style.display = "inline-block";
-    div.style.background = "hsl(var(--color-base-hue), 100%, 20%)";
     div.style.border = "2px solid black";
     div.style.color = "white";
     div.style.padding = "4px"
-    div.style.fontSize = "14px";
-    div.style.lineHeight = "14px";
     days.push(div);
     return div;
 }
@@ -61,8 +57,8 @@ function createGrid(){
 // creates the labels for days of a week
 function createLabels(){
     for (var i=0; i<7; i++){
-        days[i].style.textAlign = "center";
         days[i].innerHTML = DAYS_OF_WEEK[i];
+        days[i].classList.add("label");
     }
 }
 
@@ -82,12 +78,25 @@ function fillSquares(month, year){
     for (var i = startDate; j < days.length; i++){
         if (i>0 && i<dim+1){
             days[j].innerHTML = k;
-            days[j].style.background = "hsl(var(--color-base-hue), 100%, 20%)";
             populateSquare(days[j],k,month,year);
+            
+            days[j].addEventListener("click", function( event ) {   
+                if (event.target.classList.contains("mouseClicked")){
+                    days.forEach(cell=>{
+                        cell.classList.remove("mouseClicked");
+                    });
+                } else {
+                    days.forEach(cell=>{
+                        cell.classList.remove("mouseClicked");
+                    });
+                    event.target.classList.add("mouseClicked")
+                }
+            });
+            days[j].classList.add("day");
             k++;
         } else {
-            days[j].style.background = "hsl(var(--color-base-hue), 100%, 14%)";
             days[j].innerHTML = "";
+            days[j].classList.remove("day");
         }
         j++;
     }
@@ -105,16 +114,21 @@ function fillSquares(month, year){
 }
 
 function populateSquare(div, date, month, year){
+    // sets the color of todays square. refactor this code later its not perfect
+    if (date == TODAYS_DATE && month == TODAYS_MONTH && year == TODAYS_YEAR){
+        div.classList.add("today");
+    } else {
+        div.classList.remove("today");
+    }
     appointments.forEach(appointment => {
         appointYear = parseInt(appointment.appointDate.substring(0,4));
         appointMonth = parseInt(appointment.appointDate.substring(5,7));
         appointDate = parseInt(appointment.appointDate.substring(8,10));
         if (date == appointDate && month+1 == appointMonth &&  year == appointYear){
             div.innerHTML += "<br />" + appointment.description;
-        } else {
+        }else {
             // leave square empty
         }
-        
     });
     
 }

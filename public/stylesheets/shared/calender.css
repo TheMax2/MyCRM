@@ -1,0 +1,47 @@
+
+
+#month-title{
+    display: inline-block;
+    width: 200px;
+}
+
+.calendar-btns{
+    background-color: hsl(var(--color-base-hue), 100%, 80%);
+    border: 1px solid var(--color-btn-border);
+    border-radius: .3rem;
+    font-size: 1.2rem;
+    font-family: 'Gotham Rounded';
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.calendar-btns:hover{
+    color: var(--color-btn-primary-text-dark);
+    background-color: var(--color-btn-primary-background-dark);
+}
+
+.day{
+    background-color: hsl(var(--color-base-hue), 100%, 20%);
+    font-size: 16px;
+}
+
+.day:hover{
+    background-color: hsl(var(--color-base-hue), 100%, 30%);
+}
+
+.today{
+    background-color: darkcyan;
+}
+
+.mouseClicked{
+    background-color: hsl(var(--color-base-hue), 100%, 30%);
+}
+
+.label{
+    background-color: hsl(194, 100%, 20%);
+    text-align: center;
+    font-size: 1.2rem;
+    font-size: 1.2vw;
+}
+
