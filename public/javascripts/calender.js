@@ -17,15 +17,6 @@ var appointments = document.getElementById("appointments");
 var data = appointments.innerHTML;
 appointments = JSON.parse(data);
 
-f=3;
-appointYear = parseInt(appointments[f].appointDate.substring(0,4));
-appointMonth = parseInt(appointments[f].appointDate.substring(5,7));
-appointDate = parseInt(appointments[f].appointDate.substring(8,10));
-console.log(appointments[f].appointDate);
-console.log(appointDate+" "+appointMonth+" "+appointYear);
-
-
-
 createCalender();
 
 function createCalender() {
