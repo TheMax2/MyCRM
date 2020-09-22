@@ -1,13 +1,18 @@
-<h2 class="page-header">Appointments</h2>
 
+
+<h2 id="appointments" hidden><%= appointments %></h2>
+
+<div id="title">
+    <button id="prev-btn"><</button>
+    <contianer id="month-title">Month</contianer>
+    <button id="next-btn">></button>
+</div>
 <br>
-<% appointments.forEach(appointment => { %>
-    <div>
-        <div><%= appointment.client.firstName %> <%= appointment.client.lastName %></div>
-        <br>
-        <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">View</a>
-        <br>
-        <br>
-    </div>
-    
-<% }) %>
+<div id="main" style="
+  height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.3fr 1fr 1fr 1fr 1fr 1fr 1fr;
+"></div>
+
+<script defer src="/javascripts/calender.js"></script>

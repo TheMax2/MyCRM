@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         // });
         
         res.render('appointments/index', {
-            appointments: appointments,
+            appointments: JSON.stringify(appointments),
             searchOptions: req.query
         });
     } catch (e) {
