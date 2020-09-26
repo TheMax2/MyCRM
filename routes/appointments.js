@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
     try{
         appointment = await Appointment.findById(req.params.id);
         appointment.client = req.body.client;
-        appointment.appointDate = new Date(req.body.appointDate);
+        appointment.appointDate = new Date(req.body.appointDate + "T00:00:00");
         appointment.appointTime = req.body.appointTime;
         appointment.description = req.body.description;
         await appointment.save();

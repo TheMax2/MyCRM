@@ -135,6 +135,7 @@ function highlightSquare(div){
 // function to return the url of the "day" page of a given day(views/calendar/day).
 // used in fillSquares() function.
 function calendarURL(date, month, year){
+    if (date.length < 2) date = "0" + date;
     let day = new Date(year, month, date).getDay();
     return "/calendar/" + DAYS_OF_WEEK_ABRV[day] + " " + MONTHS_ABRV[month] + " " + date + " " + year;
 }

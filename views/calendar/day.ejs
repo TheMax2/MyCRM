@@ -1,5 +1,6 @@
 <h2 class="page-header"><%= day %></h2>
 
+<% var todayHasAppointments = false %>
 <% appointments.forEach(appointment => { %>
     <% if (appointment.appointDate.toDateString() == day){ %>
         <div class="appointment-row">
@@ -10,5 +11,9 @@
                 <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">View</a>
             </div>
         </div>
+        <% todayHasAppointments = true %>
     <% } %>
 <% }) %>
+<% if (!todayHasAppointments){ %>
+    <h3>No Appointments Today</h3>
+<% } %>
