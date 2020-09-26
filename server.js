@@ -11,6 +11,7 @@ const methodOverride = require('method-override')
 const indexRouter = require('./routes/index');
 const clientRouter = require('./routes/clients');
 const appointmentRouter = require('./routes/appointments');
+const calendarRouter = require('./routes/calendar');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -35,5 +36,6 @@ db.once('open', () => console.log('Connected to Mongoose'));
 app.use('/', indexRouter);
 app.use('/clients', clientRouter);
 app.use('/appointments', appointmentRouter);
+app.use('/calendar', calendarRouter);
 
 app.listen(process.env.PORT || 3030);

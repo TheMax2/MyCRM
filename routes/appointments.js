@@ -36,7 +36,7 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
     const appointment = new Appointment({
         client: req.body.client,
-        appointDate: new Date(req.body.appointDate),
+        appointDate: new Date(req.body.appointDate + "T00:00:00"),
         appointTime: req.body.appointTime.toString(),
         description: req.body.description
     })
@@ -56,11 +56,11 @@ router.get('/:id', async(req, res) => {
         const appointment = await Appointment.findById(req.params.id)
             .populate('client').exec();
         res.render('appointments/show', ( {appointment: appointment} ))
-    } catch (e) {
+    } catch {
         res.redirect('/');
-        console.log(e);
     }
 })
+
 
 // Edit Appointment Route
 router.get('/:id/edit', async (req, res) => {
@@ -70,11 +70,6 @@ router.get('/:id/edit', async (req, res) => {
     } catch {
         res.redirect('/');
     }
-})
-
-// New Appointment Route
-router.get('/new', async (req, res) => {
-    renderNewPage(res, new Appointment());
 })
 
 // Update Appointment Route
