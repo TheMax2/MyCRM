@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Client = require('../models/client');
-const Appointment = require('../models/appointment')
+const Appointment = require('../models/appointment');
+const {checkLogin} = require('./middleware');
 
 // All Clients Route
-router.get('/', async (req, res) => {
+router.get('/', checkLogin, async (req, res) => {
     let searchOptions = {}
     if (req.query.firstName != null && req.query.firstName !== '') {
         searchOptions.firstName = new RegExp(req.query.firstName, 'i')
+        
     }
+    searchOptions.user = req.user
     try{
         const clients = await Client.find(searchOptions);
         res.render('clients/index', {
@@ -21,13 +24,14 @@ router.get('/', async (req, res) => {
 });
 
 // New Client Route
-router.get('/new', (req, res) => {
+router.get('/new', checkLogin, (req, res) => {
     res.render('clients/new', {myClient: new Client()});
 });
 
 // Create Client Route
 router.post('/', async (req, res) => {
     const client = new Client({
+        user:req.user,
         firstName:req.body.firstName,
         lastName:req.body.lastName,
         email:req.body.email,
@@ -46,13 +50,13 @@ router.post('/', async (req, res) => {
 });
 
 // View Client Route
-router.get('/:id', async (req, res) => {
+router.get('/:id', checkLogin, async (req, res) => {
     try{
-        const client = await Client.findById(req.params.id);
+        const client = await Client.findById(req.params.id).populate('user').exec();
         const appointments = await Appointment.find({client: client.id}).limit(6).exec();
-    res.render('clients/show', {
-        myClient: client,
-        appointmentsByClient: appointments
+        res.render('clients/show', {
+            myClient: client,
+            appointmentsByClient: appointments
     })
     } catch {
         res.redirect('/');
@@ -60,7 +64,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Edit Client Route
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', checkLogin, async (req, res) => {
     try {
         const client = await Client.findById(req.params.id);
         res.render('clients/edit', {myClient: client});
@@ -74,6 +78,7 @@ router.put('/:id', async (req, res) => {
     let client;
     try{
         client = await Client.findById(req.params.id);
+        client.user = req.user
         client.firstName = req.body.firstName
         client.lastName = req.body.lastName
         client.email = req.body.email

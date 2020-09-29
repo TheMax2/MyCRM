@@ -1,5 +1,6 @@
 <h2 class="page-header"><%= myClient.firstName %> <%= myClient.lastName %></h2>
 <h3 style="margin: 0; padding: 0;">email: <%= myClient.email %></h3>  <h3 style="margin: 0; padding: 0;">phone: <%= myClient.phone %></h3>
+<h3>user: <%= myClient.user.name %></h3>
 
 <% if (appointmentsByClient.length > 0){ %>
     <h2 class="page-header">Upcoming Appointments</h2>

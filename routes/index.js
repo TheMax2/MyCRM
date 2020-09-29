@@ -7,6 +7,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const User = require('../models/user');
+const Data = require('../data/data');
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -29,6 +30,7 @@ router.use(passport.session())
 router.use(methodOverride('_method'))
 
 router.get('/', checkAuthenticated, (req, res) => {
+    Data.me.name = "Bob";
     res.render('index.ejs', {name: req.user.name})
 })
 
@@ -62,7 +64,6 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
                 }
                 res.render('register.ejs', params);
                 return;
-                //return;
             }
         });
         const user = new User({

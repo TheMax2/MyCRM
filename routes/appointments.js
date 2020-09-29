@@ -4,9 +4,11 @@ const Appointment = require('../models/appointment');
 const Client = require('../models/client');
 const e = require('express');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+const {checkLogin} = require('./middleware')
 
 // All Appointments Route
-router.get('/', async (req, res) => {
+router.get('/', checkLogin, async (req, res) => {
+
     let query = Appointment.find();
     if (req.query.title != null && req.query.title != '') { // redundant?
         query = query.regex('title', new RegExp(req.query.title, 'i'));
@@ -28,7 +30,7 @@ router.get('/', async (req, res) => {
 })
 
 // New Appointment Route
-router.get('/new', async (req, res) => {
+router.get('/new', checkLogin, async (req, res) => {
     renderNewPage(res, new Appointment());
 })
 
@@ -51,7 +53,7 @@ router.post('/', async (req, res) => {
 })
 
 // Show Appointment Route
-router.get('/:id', async(req, res) => {
+router.get('/:id', checkLogin, async(req, res) => {
     try {
         const appointment = await Appointment.findById(req.params.id)
             .populate('client').exec();
@@ -63,7 +65,7 @@ router.get('/:id', async(req, res) => {
 
 
 // Edit Appointment Route
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', checkLogin, async (req, res) => {
     try {
         const appointment = await Appointment.findById(req.params.id);
         renderEditPage(res, appointment);
