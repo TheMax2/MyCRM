@@ -7,6 +7,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const User = require('../models/user');
+const Appointment = require('../models/appointment')
 const Data = require('../data/data');
 
 const initializePassport = require('./passport-config')
@@ -29,9 +30,13 @@ router.use(passport.initialize())
 router.use(passport.session())
 router.use(methodOverride('_method'))
 
-router.get('/', checkAuthenticated, (req, res) => {
+router.get('/', checkAuthenticated, async (req, res) => {
     Data.me.name = "Bob";
-    res.render('index.ejs', {name: req.user.name})
+    const allAppointments = Appointment.find().populate('client').exec();
+        var appointments = (await allAppointments).filter( function(item){
+            return (item.client.user==req.user.id)
+        })
+    res.render('index.ejs', {name: req.user.name, appointments: appointments});
 })
 
 router.get('/login', checkNotAuthenticated, async (req, res) => {

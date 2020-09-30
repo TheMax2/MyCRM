@@ -3,3 +3,14 @@
 <form action="/logout?_method=DELETE" method="POST">
     <button class="btn btn-primary" type="submit">Log Out</button>
 </form>
+
+<h2>Upcoming Appointments:</h2>
+
+<% appointments.forEach(appointment => { %>
+    <div>
+        <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">
+            <%= appointment.appointDate.toDateString() %> <%= appointment.appointTime %> <%= appointment.description %></a>
+        <br><br>
+    </div>
+    
+<% }) %>

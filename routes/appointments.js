@@ -4,7 +4,8 @@ const Appointment = require('../models/appointment');
 const Client = require('../models/client');
 const e = require('express');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-const {checkLogin} = require('./middleware')
+const {checkLogin} = require('./middleware');
+const appointment = require('../models/appointment');
 
 // All Appointments Route
 router.get('/', checkLogin, async (req, res) => {
@@ -16,6 +17,7 @@ router.get('/', checkLogin, async (req, res) => {
 
     try {
         
+        // turn this into a function because it is used in multiple files
         const allAppointments = Appointment.find().populate('client').exec();
         var appointments = (await allAppointments).filter( function(item){
             return (item.client.user==req.user.id)
@@ -27,15 +29,17 @@ router.get('/', checkLogin, async (req, res) => {
             appointments: JSON.stringify(appointments),
             searchOptions: req.query
         });
-    } catch (e) {
-        console.log(e);
+    } catch {
         res.redirect('/')
     }
 })
 
 // New Appointment Route
 router.get('/new', checkLogin, async (req, res) => {
-    renderNewPage(req, res, new Appointment());
+ 
+    var appointment = new Appointment();
+    appointment.appointDate = new Date(req.query.date);
+    renderNewPage(req, res, appointment);
 })
 
 // Create Appointment Route
@@ -122,6 +126,12 @@ async function renderNewPage(req, res, appointment, hasError = false){
 
 
 async function renderEditPage(req, res, appointment, hasError = false){
+    renderFormPage(req, res, appointment, 'edit', hasError);
+}
+
+async function renderNewByDatePage(req, res, date, hasError = false){
+    appointment = new Appointment();
+    appointment.appointDate = new Date();
     renderFormPage(req, res, appointment, 'edit', hasError);
 }
 
