@@ -9,8 +9,10 @@ router.get('/', async (req, res) => {
 
 router.get('/:day', async (req, res) => {
     try {
-        const appointments = await Appointment.find()
-            .populate('client').exec();
+        const allAppointments = Appointment.find().populate('client').exec();
+        var appointments = (await allAppointments).filter( function(item){
+            return (item.client.user==req.user.id)
+        })
         res.render('calendar/day', ( {appointments: appointments, day: req.params.day} ))
     } catch {
         res.redirect('/');
@@ -18,4 +20,4 @@ router.get('/:day', async (req, res) => {
 })
 
 
-module.exports = router;
+module.exports = router;  

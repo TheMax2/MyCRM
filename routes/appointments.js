@@ -9,15 +9,19 @@ const {checkLogin} = require('./middleware')
 // All Appointments Route
 router.get('/', checkLogin, async (req, res) => {
 
-    let query = Appointment.find();
-    if (req.query.title != null && req.query.title != '') { // redundant?
-        query = query.regex('title', new RegExp(req.query.title, 'i'));
-    }
+    // let query = Appointment.find();
+    // if (req.query.title != null && req.query.title != '') { // redundant?
+    //     query = query.regex('title', new RegExp(req.query.title, 'i'));
+    // }
+
     try {
-        const appointments = await query.populate('client').exec();
-        // await appointments.forEach(appointment => {
-        //     appointment.populate('client').exec();
-        // });
+        
+        const allAppointments = Appointment.find().populate('client').exec();
+        var appointments = (await allAppointments).filter( function(item){
+            return (item.client.user==req.user.id)
+        })
+
+        //const appointments = await Appointment.populate('client').find({'client.user': req.user.id}).exec();
         
         res.render('appointments/index', {
             appointments: JSON.stringify(appointments),
@@ -31,7 +35,7 @@ router.get('/', checkLogin, async (req, res) => {
 
 // New Appointment Route
 router.get('/new', checkLogin, async (req, res) => {
-    renderNewPage(res, new Appointment());
+    renderNewPage(req, res, new Appointment());
 })
 
 // Create Appointment Route
@@ -48,7 +52,7 @@ router.post('/', async (req, res) => {
         const newAppointment = await appointment.save();
         res.redirect(`appointments/${newAppointment.id}`);
     } catch {
-        renderNewPage(res, appointment, true);
+        renderNewPage(req, res, appointment, true);
     }
 })
 
@@ -68,7 +72,7 @@ router.get('/:id', checkLogin, async(req, res) => {
 router.get('/:id/edit', checkLogin, async (req, res) => {
     try {
         const appointment = await Appointment.findById(req.params.id);
-        renderEditPage(res, appointment);
+        renderEditPage(req, res, appointment);
     } catch {
         res.redirect('/');
     }
@@ -87,7 +91,7 @@ router.put('/:id', async (req, res) => {
         res.redirect(`/appointments/${appointment.id}`);
     } catch {
         if (appointment != null) {
-            renderEditPage(res, appointment, true);
+            renderEditPage(req, res, appointment, true);
         } else {
             redirect('/');
         }
@@ -112,19 +116,19 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-async function renderNewPage(res, appointment, hasError = false){
-    renderFormPage(res, appointment, 'new', hasError);
+async function renderNewPage(req, res, appointment, hasError = false){
+    renderFormPage(req, res, appointment, 'new', hasError);
 }
 
 
-async function renderEditPage(res, appointment, hasError = false){
-    renderFormPage(res, appointment, 'edit', hasError);
+async function renderEditPage(req, res, appointment, hasError = false){
+    renderFormPage(req, res, appointment, 'edit', hasError);
 }
 
 
-async function renderFormPage(res, appointment, form, hasError = false){
+async function renderFormPage(req, res, appointment, form, hasError = false){
     try {
-        const clients = await Client.find({});
+        const clients = await Client.find({user: req.user});
         const params = {
             clients: clients,
             appointment: appointment
@@ -137,7 +141,8 @@ async function renderFormPage(res, appointment, form, hasError = false){
             }
         }
         res.render(`appointments/${form}`, params);
-    } catch {
+    } catch (e){
+        console.log(e);
         res.redirect('/appointments');
     }
 }

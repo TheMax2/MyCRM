@@ -3,7 +3,7 @@ function checkLogin(req, res, next) {
         res.status(403);
         return res.render('./requireLogin');
     } else {
-        console.log(req.user.name);
+        //console.log(req.user.name);
     }
     
     next();
