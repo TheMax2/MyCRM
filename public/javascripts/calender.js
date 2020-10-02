@@ -154,7 +154,7 @@ function populateSquare(div, date, month, year){
         appointMonth = parseInt(appointment.appointDate.substring(5,7));
         appointDate = parseInt(appointment.appointDate.substring(8,10));
         if (date == appointDate && month+1 == appointMonth &&  year == appointYear){
-            div.innerHTML += "<br />" + appointment.description;
+            div.innerHTML += "<br />" + "-" + appointment.client.firstName + " " + appointment.appointTime;
         }else {
             // leave square empty
         }

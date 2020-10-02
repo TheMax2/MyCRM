@@ -1,21 +1,28 @@
 <h2 class="page-header"><%= day %></h2>
 
 <% var todayHasAppointments = false %>
-<% appointments.forEach(appointment => { %>
-    <% if (appointment.appointDate.toDateString() == day){ %>
-        <div class="appointment-row">
-            <div > <%= appointment.client.firstName %> <%= appointment.client.lastName %></div>
-            <div > <%= appointment.appointDate.toDateString() %></div>
-            <div > <%= appointment.appointTime %></div>
-            <div class="btn-row">
-                <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">View</a>
+<div>
+    <% appointments.forEach(appointment => { %>
+        <% if (appointment.appointDate.toDateString() == day){ %>
+            <div class="appointment-row">
+                <a class="btn-long" href="/appointments/<%= appointment.id %>">
+                    Appointment 
+                    <% if (appointment.appointTime != null && appointment.appointTime != '' && appointment.appointTime != undefined){ %>
+                        at <%= appointment.appointTime %>
+                    <% } %>
+                    with <%= appointment.client.firstName %> <%= appointment.client.lastName %>
+                </a>
             </div>
-        </div>
-        <% todayHasAppointments = true %>
+            <% todayHasAppointments = true %>
+        <% } %>
+    <% }) %>
+    <% if (!todayHasAppointments){ %>
+        <h3>No Appointments Today</h3>
     <% } %>
-<% }) %>
-<% if (!todayHasAppointments){ %>
-    <h3>No Appointments Today</h3>
-<% } %>
-<br>
-<a class="btn btn-primary" href="/appointments/new/?date=<%= day %>"">Add Appointment</a>
+</div>
+<div style="white-space: pre-wrap;">
+    &#10;
+</div>
+<div>
+    <a class="btn btn-primary" href="/appointments/new/?date=<%= day %>">Add Appointment</a>
+</div>

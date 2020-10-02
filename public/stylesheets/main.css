@@ -33,9 +33,11 @@ body {
 }
 
 .page-header {
+ 
     font-size: 2rem;
     font-weight: 500;
 }
+
 
 .error-message {
     color: hsl(

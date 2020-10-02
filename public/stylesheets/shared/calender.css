@@ -31,7 +31,7 @@
 }
 
 .today{
-    background-color: darkcyan;
+    background-color: var(--color-selected);
 }
 
 .mouseClicked{

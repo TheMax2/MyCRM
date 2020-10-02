@@ -1,13 +1,12 @@
-<h2 class="page-header"><%= myClient.firstName %> <%= myClient.lastName %></h2>
-<h3 style="margin: 0; padding: 0;">email: <%= myClient.email %></h3>  <h3 style="margin: 0; padding: 0;">phone: <%= myClient.phone %></h3>
-<h3>user: <%= myClient.user.name %></h3>
+<h2 class="page-header" style="margin-bottom: 0;"><%= myClient.firstName %> <%= myClient.lastName %></h2>
+<h3 style="margin: 0; padding-left: 40px;">email: <%= myClient.email %></h3>  <h3 style="margin: 0; padding-left: 40px;">phone: <%= myClient.phone %></h3>
 
 <% if (appointmentsByClient.length > 0){ %>
-    <h2 class="page-header">Upcoming Appointments</h2>
+    <h3>Upcoming Appointments</h3>
     <% appointmentsByClient.forEach(appointment => { %>
         <div>
-            <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">
-                <%= appointment.appointDate.toDateString() %> <%= appointment.appointTime %> <%= appointment.description %></a>
+            <a class="btn-long" href="/appointments/<%= appointment.id %>">
+                <%= appointment.appointDate.toDateString() %> <%= appointment.appointTime %></a>
             <br><br>
         </div>
         

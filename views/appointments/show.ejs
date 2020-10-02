@@ -1,14 +1,6 @@
 <h2 class="page-header"><%= appointment.title %></h2>
+
 <div class="appointment-details">
-    <div>
-        <div class="appointment-details-btn-grid">
-            <a class="btn btn-primary" href="/appointments/<%= appointment.id %>/edit">Edit</a>
-            <%- include('../partials/deleteForm', 
-                { url: `/appointments/${appointment.id}` }) %>
-            <a class="btn btn-primary appointment-details-client-btn" 
-            href="/clients/<%= appointment.client.id %>">View Client</a>
-        </div>
-    </div>
     <div class="appointment-details-grid">
         <div class="appointment-details-label">Client:</div>
         <div><%= appointment.client.firstName %> <%= appointment.client.lastName %></div>
@@ -20,3 +12,16 @@
         <div><%= appointment.description %></div>
     </div>
 </div>
+<br>
+<div class="appointment-details">
+    <div>
+        <div class="appointment-details-btn-grid">
+            <a class="btn btn-primary" href="/appointments/<%= appointment.id %>/edit">Edit</a>
+            <%- include('../partials/deleteForm', 
+                { url: `/appointments/${appointment.id}` }) %>
+            <a class="btn btn-primary appointment-details-client-btn" 
+            href="/clients/<%= appointment.client.id %>">View Client</a>
+        </div>
+    </div>
+</div>
+

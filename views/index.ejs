@@ -1,15 +1,18 @@
-<h2 class="page-header">Hi <%= name %></h2>
 
-<form action="/logout?_method=DELETE" method="POST">
-    <button class="btn btn-primary" type="submit">Log Out</button>
-</form>
+<div class="row">
+    <h2 class="page-header" style="margin: 0;">Welcome <%= name %></h2>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button class="btn btn-primary" type="submit">Log Out</button>
+    </form>
+</div>
+
 
 <h2>Upcoming Appointments:</h2>
 
 <% appointments.forEach(appointment => { %>
     <div>
-        <a class="btn btn-primary" href="/appointments/<%= appointment.id %>">
-            <%= appointment.appointDate.toDateString() %> <%= appointment.appointTime %> <%= appointment.description %></a>
+        <a class="btn-long" href="/appointments/<%= appointment.id %>">
+            <%= appointment.appointDate.toDateString() %> <%= appointment.appointTime %> with <%= appointment.client.firstName %> <%= appointment.client.lastName %></a>
         <br><br>
     </div>
     
