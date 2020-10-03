@@ -4,7 +4,12 @@ const Appointment = require('../models/appointment');
 const e = require('express');
 
 router.get('/', async (req, res) => {
-    res.render('calendar/index');
+    try{
+        res.redirect('/appointments')
+    } catch {
+        res.render('calendar/index');
+    }
+    
 })
 
 router.get('/:day', async (req, res) => {

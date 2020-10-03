@@ -68,7 +68,15 @@ function createGrid(){
 // creates the labels for days of the week on the first row of calendar
 function createLabels(){
     for (var i=0; i<7; i++){
-        days[i].innerHTML = DAYS_OF_WEEK[i];
+        var w = window.innerWidth;
+        console.log("w = "+w);
+        if (w<700){
+            days[i].innerHTML = DAYS_OF_WEEK_ABRV[i];
+            days[i].style.fontSize= "20px"
+        } else {
+            days[i].innerHTML = DAYS_OF_WEEK[i];
+        }
+        
         days[i].classList.add("label");
     }
 }
